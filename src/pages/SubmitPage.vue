@@ -15,6 +15,12 @@
           <textarea class="textarea" v-model="inputAbstract" placeholder="Enter your abstract here"></textarea>
         </div>
       </div>
+      <div class="field">
+        <label class="label">Outline/Slides</label>
+        <div class="control">
+          <input type="text" class="input" v-model="inputOutline" placeholder="Enter a link here">
+        </div>
+      </div>
       <div class="field is-grouped">
         <div class="control">
           <button class="button is-link" @click="submitTalk">Submit</button>
@@ -38,7 +44,8 @@ export default {
       deadline: new Date(2018, 2, 5),
 
       inputTitle: '',
-      inputAbstract: ''
+      inputAbstract: '',
+      inputOutline: ''
     }
   },
   methods: {

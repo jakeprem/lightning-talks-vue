@@ -1,10 +1,34 @@
 <template>
   <div class="content">
-    <ol>
-      <li v-for="talk in talks" :key="`${talk.submitter}:${talk.title}:${talk.abstract}`">
-        <span>{{ `${talk.submitter}:${talk.title}:${talk.abstract}` }}</span>
-      </li>
-    </ol>
+    <br>
+    <div class="columns">
+      <div class="column"></div>
+      <div class="column is-four-fifths">
+        <template v-for="talk in talks">
+          <div class="card" :key="`${talk.submitter}:${talk.title}`">
+            <div class="card-content">
+              <p class="title">
+                {{talk.title}}
+              </p>
+              <p class="subtitle">
+                {{talk.submitter}}
+              </p>
+              <p class="content">
+                {{talk.abstract}}
+              </p>
+            </div>
+            <footer class="card-footer">
+              <p class="card-footer-item">
+                <a :href="talk.outline">{{ talk.outline }}</a>
+              </p>
+            </footer>
+          </div>
+          <br>
+        </template>
+      </div>
+      <div class="column"></div>
+    </div>
+    
   </div>
 </template>
 
@@ -32,5 +56,4 @@ export default {
 </script>
 
 <style>
-
 </style>
