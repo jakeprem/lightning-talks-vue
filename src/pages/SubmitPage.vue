@@ -1,0 +1,62 @@
+<template>
+  <section class="section">
+    <div class="container">
+      <h1 class="title">Submit a Lightning Talk</h1>
+      <h2 class="subtitle is-size-6 has-text-grey-light">Deadline: {{ friendlyDeadline }}</h2>
+      <div class="field">
+        <label class="label">Title</label>
+        <div class="control">
+          <input type="text" class="input" v-model="inputTitle" placeholder="Enter your title here">
+        </div>
+      </div>
+      <div class="field">
+        <label class="label">Abstract</label>
+        <div class="control">
+          <textarea class="textarea" v-model="inputAbstract" placeholder="Enter your abstract here"></textarea>
+        </div>
+      </div>
+      <div class="field is-grouped">
+        <div class="control">
+          <button class="button is-link" @click="submitTalk">Submit</button>
+        </div>
+        <div class="control">
+          <button class="button is-text" @click="resetInputs">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </section>
+</template>
+
+<script>
+import moment from 'moment/min/moment.min'
+
+export default {
+  name: 'HelloWorld',
+  data () {
+    return {
+      msg: 'Welcome to Your Vue.js App',
+      deadline: new Date(2018, 2, 5),
+
+      inputTitle: '',
+      inputAbstract: ''
+    }
+  },
+  methods: {
+    resetInputs () {
+      this.inputTitle = ''
+      this.inputAbstract = ''
+    },
+    submitTalk () {
+      alert('Submit activated')
+    }
+  },
+  computed: {
+    friendlyDeadline () {
+      return moment(this.deadline).format('MMMM DD, YYYY')
+    }
+  }
+}
+</script>
+
+<style>
+</style>
