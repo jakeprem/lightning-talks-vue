@@ -23,7 +23,6 @@
               </p>
             </footer>
           </div>
-          <br>
         </template>
       </div>
       <div class="column"></div>

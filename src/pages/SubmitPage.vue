@@ -2,7 +2,7 @@
   <section class="section">
     <div class="container">
       <h1 class="title">Submit a Lightning Talk</h1>
-      <h2 class="subtitle is-size-6 has-text-grey-light">Deadline: {{ friendlyDeadline }}</h2>
+      <h2 class="subtitle is-size-6 has-text-grey-light">Deadline: {{ submissionDeadline }}</h2>
       <div class="field">
         <label class="label">Title</label>
         <div class="control">
@@ -34,15 +34,13 @@
 </template>
 
 <script>
-import moment from 'moment/min/moment.min'
+import { mapGetters } from 'vuex'
+import { format } from '@/utils/dates'
 
 export default {
   name: 'SubmitPage',
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App',
-      deadline: new Date(2018, 2, 5),
-
       inputTitle: '',
       inputAbstract: '',
       inputOutline: ''
@@ -58,8 +56,11 @@ export default {
     }
   },
   computed: {
-    friendlyDeadline () {
-      return moment(this.deadline).format('MMMM DD, YYYY')
+    ...mapGetters([
+      'activeEvent'
+    ]),
+    submissionDeadline () {
+      return format.monthDayYear(this.activeEvent.submissionDeadline)
     }
   }
 }

@@ -2732,7 +2732,7 @@ find-up@^2.0.0, find-up@^2.1.0:
   dependencies:
     locate-path "^2.0.0"
 
-firebase@^4.8.1:
+firebase@^4.10.1:
   version "4.10.1"
   resolved "https://registry.yarnpkg.com/firebase/-/firebase-4.10.1.tgz#68724a6f680ca5759bd870dcb18b5f6e09a176b1"
   dependencies:
@@ -6456,6 +6456,10 @@ vue-template-es2015-compiler@^1.6.0:
 vue@^2.5.2:
   version "2.5.13"
   resolved "https://registry.yarnpkg.com/vue/-/vue-2.5.13.tgz#95bd31e20efcf7a7f39239c9aa6787ce8cf578e1"
+
+vuex@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/vuex/-/vuex-3.0.1.tgz#e761352ebe0af537d4bb755a9b9dc4be3df7efd2"
 
 watchpack@^1.4.0:
   version "1.5.0"

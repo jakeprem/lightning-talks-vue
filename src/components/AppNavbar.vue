@@ -46,7 +46,7 @@
           Lightning Talks
         </h1>
         <h2 class="subtitle">
-          {{ formatEventDate(activeEvent) }}
+          {{ eventDate }}
         </h2>
       </div>
     </div>
@@ -54,7 +54,9 @@
 </template>
 
 <script>
-import moment from 'moment/min/moment.min'
+import { mapGetters, mapActions } from 'vuex'
+
+import { format } from '@/utils/dates'
 // import {ClickOutside} from '@/directives/ClickOutside'
 
 export default {
@@ -81,6 +83,9 @@ export default {
     }
   },
   methods: {
+    ...mapActions([
+      'setActiveEvent'
+    ]),
     toggle (event) {
       if (this.isMenuOpen) {
         return this.hide(event)
@@ -96,26 +101,26 @@ export default {
       this.isMenuOpen = false
       // event.stopPropagation()
       document.removeEventListener('click', this.hide)
-    },
-    formatEventDate (event) {
-      // March 1st 2018, 1:20 pm
-      if (event) {
-        let formatString = 'MMMM Do YYYY, h:mm a'
-        return moment(event.start_datetime).format(formatString)
-      }
     }
   },
   computed: {
-    activeEvent () {
-      return this.activeEvents[0]
+    ...mapGetters([
+      'activeEvent'
+    ]),
+    eventDate () {
+      return format.monthDayYearTime(this.activeEvent.start_datetime)
     }
   },
   firestore () {
     return {
       // events: this.$db.collection('events'),
-      activeEvents: this.$db.collection('events').where('active', '==', true)
+      activeEvents: this.$db.collection('events').where('active', '==', true).limit(1)
     }
   },
+  created () {
+    // This isn't really an ideal solution
+    setTimeout(() => this.setActiveEvent(this.activeEvents[0]), 1000)
+  }
   // directives: {
   // To enable, add this tag to the html element:
   // <div v-click-outside="hide">...</div>
