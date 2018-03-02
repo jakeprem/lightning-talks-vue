@@ -37,7 +37,7 @@
 import moment from 'moment/min/moment.min'
 
 export default {
-  name: 'HelloWorld',
+  name: 'SubmitPage',
   data () {
     return {
       msg: 'Welcome to Your Vue.js App',

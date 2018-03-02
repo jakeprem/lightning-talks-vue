@@ -28,7 +28,7 @@
       </div>
       <div class="column"></div>
     </div>
-    
+
   </div>
 </template>
 

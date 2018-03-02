@@ -46,7 +46,7 @@
           Lightning Talks
         </h1>
         <h2 class="subtitle">
-          {{ friendlyDate }}
+          {{ formatEventDate(activeEvent) }}
         </h2>
       </div>
     </div>
@@ -55,7 +55,7 @@
 
 <script>
 import moment from 'moment/min/moment.min'
-import {ClickOutside} from '@/directives/ClickOutside'
+// import {ClickOutside} from '@/directives/ClickOutside'
 
 export default {
   data () {
@@ -77,8 +77,7 @@ export default {
           name: 'ListTalksPage',
           exact: true
         }
-      ],
-      eventDate: new Date(2018, 2, 8, 17, 30)
+      ]
     }
   },
   methods: {
@@ -97,17 +96,28 @@ export default {
       this.isMenuOpen = false
       // event.stopPropagation()
       document.removeEventListener('click', this.hide)
+    },
+    formatEventDate (event) {
+      // March 1st 2018, 1:20 pm
+      if (event) {
+        let formatString = 'MMMM Do YYYY, h:mm a'
+        return moment(event.start_datetime).format(formatString)
+      }
     }
   },
   computed: {
-    friendlyDate () {
-      // March 1st 2018, 1:20 pm
-      let formatString = 'MMMM Do YYYY, h:mm a'
-      return moment(this.eventDate).format(formatString)
+    activeEvent () {
+      return this.activeEvents[0]
+    }
+  },
+  firestore () {
+    return {
+      // events: this.$db.collection('events'),
+      activeEvents: this.$db.collection('events').where('active', '==', true)
     }
   },
   // directives: {
-  // To enable, add this tag to the html element: 
+  // To enable, add this tag to the html element:
   // <div v-click-outside="hide">...</div>
   //   ClickOutside
   // }
