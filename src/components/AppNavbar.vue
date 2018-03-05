@@ -113,16 +113,6 @@ export default {
     eventDate () {
       return format.monthDayYearTime(this.activeEvent.start_datetime)
     }
-  },
-  firestore () {
-    return {
-      // events: this.$db.collection('events'),
-      activeEvents: this.$db.collection('events').where('active', '==', true).limit(1)
-    }
-  },
-  created () {
-    // This isn't really an ideal solution
-    setTimeout(() => this.setActiveEvent(this.activeEvents[0]), 1000)
   }
   // directives: {
   // To enable, add this tag to the html element:

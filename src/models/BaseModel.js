@@ -21,6 +21,23 @@ export default class BaseModel {
       reject(new Error('Rejection reasons'))
     })
   }
+
+  default () {
+    if (this.__contract__ instanceof Array) {
+      let obj = {}
+      this.__contract__.forEach(prop => {
+        // This is a bad way to do this.
+        // It should be handled by using an object
+        // with defaults specified for the contract
+        if (prop.includes('datetime')) {
+          obj[prop] = new Date()
+        } else {
+          obj[prop] = ''
+        }
+      })
+      return obj
+    }
+  }
 }
 
 /**
@@ -31,9 +48,9 @@ export default class BaseModel {
  * .catch(errorFunction)
  */
 
- /**
+/**
   * Additional work on this module would be to add support
   * for more complex contracts, including object based
   * contracts with properties and datatypes, as well
   * as default values, etc.
-  */
+*/

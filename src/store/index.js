@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 
 import EventModel from '@/models/EventModel'
-Window.EventModel = EventModel
+import FirebaseUtils from '@/utils/firebase'
 
 Vue.use(Vuex)
 
@@ -14,16 +14,36 @@ const types = {
 }
 
 const state = {
-  activeEvent: Date(),
+  activeEvent: EventModel.default(),
   user: ''
 }
 
 const getters = {
   activeEvent: state => state.activeEvent,
+  activeEventState: state => {
+    let currentDate = new Date()
+    let activeEvent = state.activeEvent
+
+    switch (true) {
+      case currentDate < activeEvent.submission_deadline:
+        return 'BeforeSubmissionDeadline'
+      case currentDate < activeEvent.start_datetime:
+        return 'BeforeEventStart'
+      case currentDate < activeEvent.end_datetime:
+        return 'FeedbackEnabled'
+    }
+  },
   user: state => state.user
 }
 
 const actions = {
+  fetchActiveEvent ({ commit }) {
+    FirebaseUtils.getActiveEvent()
+      .then(event => {
+        commit(types.SET_ACTIVE_EVENT, event)
+      })
+      .catch(error => console.log(error))
+  },
   setActiveEvent ({ commit }, event) {
     commit(types.SET_ACTIVE_EVENT, event)
   },
