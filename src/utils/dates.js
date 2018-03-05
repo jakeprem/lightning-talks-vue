@@ -1,6 +1,6 @@
 import moment from 'moment/min/moment.min'
 
-function formatDate(date, format) {
+function formatDate (date, format) {
   return moment(date).format(format)
 }
 

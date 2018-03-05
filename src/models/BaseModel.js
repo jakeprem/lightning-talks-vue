@@ -1,29 +1,39 @@
 export default class BaseModel {
-  __contract__ = {}
+  __contract__ = []
 
-  constructor(props) {
-    Object.entries(props).forEach(
-      ([key, value]) => {
-        this[key] = value
-      }
-    )
+  constructor (contract) {
+    this.__contract__ = contract
   }
 
-  isValid() {
-    Object.entries(this.__contract__).every(
-      ([key, value]) => {
-        return this.hasOwnProperty(key)
+  validate (model) {
+    let isValid = false
+    return new Promise((resolve, reject) => {
+      if (this.__contract__ instanceof Array) {
+        isValid = this.__contract__.every(
+          item => {
+            return model.hasOwnProperty(item)
+          }
+        )
       }
-    )
-  }
-
-  get dataObject() {
-    var returnObj = {}
-    Object.entries(this.__contract__).forEach(
-      ([key, value]) => {
-        returnObj[key] = this[key]
+      if (isValid) {
+        resolve(model)
       }
-    )
-    return returnObj
+      reject(new Error('Rejection reasons'))
+    })
   }
 }
+
+/**
+ * The goal is for you to be able to do something like
+ * Model.validate(model)
+ * .then(model => return Model.persist(model))
+ * .then(successFunction)
+ * .catch(errorFunction)
+ */
+
+ /**
+  * Additional work on this module would be to add support
+  * for more complex contracts, including object based
+  * contracts with properties and datatypes, as well
+  * as default values, etc.
+  */

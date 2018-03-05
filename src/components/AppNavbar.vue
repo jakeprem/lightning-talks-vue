@@ -26,12 +26,15 @@
                 &nbsp; {{ link.text || link.name }}
               </router-link>
               <span class="navbar-item">
-                <a class="button is-primary is-inverted">
+                <router-link
+                  class="button is-info is-inverted"
+                  :to="{name: 'LoginPage'}"
+                >
                   <span class="icon">
                     <i class="fas fa-sign-in-alt"></i>
                   </span>
                   <span>Login</span>
-                </a>
+                </router-link>
               </span>
             </div>
           </div>
