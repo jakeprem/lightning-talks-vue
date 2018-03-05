@@ -34,7 +34,7 @@ Window.VueApp = new Vue({
         this.$store.dispatch('setUser', {
           displayName, uid
         })
-        this.$router.push('/')
+        this.$router.push({name: 'IndexPage'})
       } else {
         this.$store.dispatch('setUser', '')
       }

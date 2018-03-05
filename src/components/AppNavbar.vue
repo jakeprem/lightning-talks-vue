@@ -116,7 +116,7 @@ export default {
     logout () {
       // This maybe should be abstracted to Vuex
       this.$firebase.app.auth().signOut().then(() => {
-        this.$router.push('/')
+        this.$router.push({name: 'IndexPage'})
       })
     }
   },
