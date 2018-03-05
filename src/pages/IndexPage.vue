@@ -1,8 +1,12 @@
 <template>
-  <div></div>
+  <div :is="activeComponent"></div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+import SubmitPage from '@/pages/SubmitPage'
+import ListTalksPage from '@/pages/ListTalksPage'
+
 export default {
   data () {
     return {
@@ -17,6 +21,27 @@ export default {
         talkAccepted: false
       }
     }
+  },
+  computed: {
+    ...mapGetters([
+      'activeEventState'
+    ]),
+    activeComponent () {
+      switch (this.activeEventState) {
+        case 'BeforeSubmissionDeadline':
+          return SubmitPage
+        case 'BeforeEventStart':
+          return ListTalksPage
+        case 'AfterEventStart':
+          return 'FeedbackPage'
+        default:
+          //
+          break
+      }
+    }
+  },
+  components: {
+    ListTalksPage
   }
 }
 </script>

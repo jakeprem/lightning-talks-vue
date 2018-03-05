@@ -5,17 +5,21 @@ export default class BaseModel {
     this.__contract__ = contract
   }
 
+  _validate(model) {
+    let valid = false
+    if (this.__contract__ instanceof Array) {
+      valid = this.__contract__.every(
+        item => {
+          return model.hasOwnProperty(item)
+        }
+      )
+    }
+    return valid
+  }
+
   validate (model) {
-    let isValid = false
     return new Promise((resolve, reject) => {
-      if (this.__contract__ instanceof Array) {
-        isValid = this.__contract__.every(
-          item => {
-            return model.hasOwnProperty(item)
-          }
-        )
-      }
-      if (isValid) {
+      if (this._validate(model)) {
         resolve(model)
       }
       reject(new Error('Rejection reasons'))

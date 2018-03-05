@@ -25,7 +25,7 @@
               >
                 &nbsp; {{ link.text || link.name }}
               </router-link>
-              <span class="navbar-item">
+              <span class="navbar-item" v-if="!isValidUser">
                 <router-link
                   class="button is-info is-inverted"
                   :to="{name: 'LoginPage'}"
@@ -35,6 +35,14 @@
                   </span>
                   <span>Login</span>
                 </router-link>
+              </span>
+              <span class="navbar-item" @click="logout" v-else>
+                <div class="button is-info is-inverted">
+                  <span class="icon">
+                    <i class="fas fa-sign-out-alt"></i>
+                  </span>
+                  <span>Logout, {{ username }}</span>
+                </div>
               </span>
             </div>
           </div>
@@ -104,11 +112,19 @@ export default {
       this.isMenuOpen = false
       // event.stopPropagation()
       document.removeEventListener('click', this.hide)
+    },
+    logout () {
+      // This maybe should be abstracted to Vuex
+      this.$firebase.app.auth().signOut().then(() => {
+        this.$router.push('/')
+      })
     }
   },
   computed: {
     ...mapGetters([
-      'activeEvent'
+      'activeEvent',
+      'username',
+      'isValidUser'
     ]),
     eventDate () {
       return format.monthDayYearTime(this.activeEvent.start_datetime)

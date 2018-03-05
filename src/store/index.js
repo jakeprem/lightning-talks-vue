@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 
 import EventModel from '@/models/EventModel'
+import UserModel from '@/models/UserModel'
 import FirebaseUtils from '@/utils/firebase'
 
 Vue.use(Vuex)
@@ -33,7 +34,12 @@ const getters = {
         return 'FeedbackEnabled'
     }
   },
-  user: state => state.user
+  user: state => state.user,
+  username: state => state.user.displayName,
+  userId: state => state.user.uid,
+  isValidUser: state => {
+    return UserModel._validate(state.user)
+  }
 }
 
 const actions = {
