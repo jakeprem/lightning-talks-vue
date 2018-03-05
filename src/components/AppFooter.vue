@@ -7,7 +7,7 @@
           <a href="http://opensource.org/licenses/mit-license.php">MIT</a>.
         </p>
         <p>
-          <a class="icon" href="https://github.com/jakeprem/">
+          <a class="icon" href="https://github.com/jakeprem/lightning-talks-vue">
             <i class="fab fa-github"></i>
           </a>
         </p>
