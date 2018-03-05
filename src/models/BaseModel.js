@@ -5,7 +5,7 @@ export default class BaseModel {
     this.__contract__ = contract
   }
 
-  _validate(model) {
+  _validate (model) {
     let valid = false
     if (this.__contract__ instanceof Array) {
       valid = this.__contract__.every(
