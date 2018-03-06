@@ -10,7 +10,7 @@ export default class BaseModel {
     if (this.__contract__ instanceof Array) {
       valid = this.__contract__.every(
         item => {
-          return model.hasOwnProperty(item)
+          return model.hasOwnProperty(item) && model[item] !== undefined
         }
       )
     }
@@ -22,7 +22,7 @@ export default class BaseModel {
       if (this._validate(model)) {
         resolve(model)
       }
-      reject(new Error('Rejection reasons'))
+      reject(new Error('There are invalid fields on the model: ' + JSON.stringify(model)))
     })
   }
 

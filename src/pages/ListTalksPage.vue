@@ -4,14 +4,14 @@
     <div class="columns">
       <div class="column"></div>
       <div class="column is-four-fifths">
-        <template v-for="talk in talks">
-          <div class="card" :key="`${talk.submitter}:${talk.title}`">
+        <template v-for="talk in eventTalks">
+          <div class="card" :key="`${talk.submitterName}:${talk.title}`">
             <div class="card-content">
               <p class="title">
                 {{talk.title}}
               </p>
               <p class="subtitle">
-                {{talk.submitter}}
+                {{talk.submitterName}}
               </p>
               <p class="content">
                 {{talk.abstract}}
@@ -19,7 +19,7 @@
             </div>
             <footer class="card-footer">
               <p class="card-footer-item">
-                <a :href="talk.outline">{{ talk.outline }}</a>
+                <a :href="talk.outline">{{ talk.outline_link }}</a>
               </p>
             </footer>
           </div>
@@ -32,24 +32,17 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
-  data () {
-    return {
-      talks: [
-        {
-          submitter: 'Jake Prem',
-          title: 'WebRTC in 15 minutes or less',
-          abstract: 'Let\'s talk about WebRTC',
-          outline: 'https://www.google.com'
-        },
-        {
-          submitter: 'Jake Prem',
-          title: 'Elm: Fun(ctional) on the FrontEnd',
-          abstract: 'Elm is cool, let\'s talk about that!',
-          outline: 'https://www.google.com'
-        }
-      ]
-    }
+  computed: {
+    ...mapGetters([
+      'activeEvent',
+      'eventTalks'
+    ])
+  },
+  created () {
+    this.$store.dispatch('fetchEventTalks', this.activeEvent['.key'])
   }
 }
 </script>

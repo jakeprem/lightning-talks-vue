@@ -4,5 +4,8 @@ export default new BaseModel([
   'title',
   'abstract',
   'outline_link',
-  'user'
+  'eventId',
+  'selected',
+  'submitterId',
+  'submitterName'
 ])

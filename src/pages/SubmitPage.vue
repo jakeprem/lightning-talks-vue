@@ -34,7 +34,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 import { format } from '@/utils/dates'
 
 export default {
@@ -47,12 +47,23 @@ export default {
     }
   },
   methods: {
+    ...mapActions([
+      'submitTalkForEvent'
+    ]),
     resetInputs () {
       this.inputTitle = ''
       this.inputAbstract = ''
+      this.inputOutline = ''
     },
     submitTalk () {
-      alert('Submit activated')
+      this.submitTalkForEvent({
+        title: this.inputTitle,
+        abstract: this.inputAbstract,
+        outline_link: this.inputOutline
+      }).then(x => {
+        console.log(x)
+        this.resetInputs()
+      })
     }
   },
   computed: {

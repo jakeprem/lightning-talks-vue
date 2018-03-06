@@ -28,7 +28,6 @@ Window.VueApp = new Vue({
   },
   created () {
     firebaseApp.auth().onAuthStateChanged(user => {
-      console.log('Auth state changed: ', user)
       if (user) {
         var {displayName, uid} = user
         this.$store.dispatch('setUser', {

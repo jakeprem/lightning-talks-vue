@@ -80,13 +80,18 @@ export default {
           name: 'IndexPage',
           exact: true
         },
+        // {
+        //   text: 'Submit a Talk',
+        //   name: 'SubmitPage',
+        //   exact: true
+        // },
+        // {
+        //   text: 'View Talks',
+        //   name: 'ListTalksPage',
+        //   exact: true
+        // }
         {
-          text: 'Submit a Talk',
-          name: 'SubmitPage',
-          exact: true
-        },
-        {
-          text: 'View Talks',
+          text: 'Admin',
           name: 'ListTalksPage',
           exact: true
         }
