@@ -1,4 +1,7 @@
 import Vue from 'vue'
+import Buefy from 'buefy'
+import 'buefy/lib/buefy.css'
+
 import App from './App'
 import router from './router'
 import store from './store'
@@ -8,6 +11,7 @@ import VueFirestore from 'vue-firestore'
 
 Vue.config.productionTip = false
 
+Vue.use(Buefy)
 Vue.use(VueFirestore)
 
 Vue.prototype.$firebase = {
