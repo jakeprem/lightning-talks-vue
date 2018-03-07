@@ -30,17 +30,13 @@
                   class="button is-info is-inverted"
                   :to="{name: 'LoginPage'}"
                 >
-                  <span class="icon">
-                    <i class="fas fa-sign-in-alt"></i>
-                  </span>
+                  <b-icon icon="login"></b-icon>
                   <span>Login</span>
                 </router-link>
               </span>
               <span class="navbar-item" @click="logout" v-else>
                 <div class="button is-info is-inverted">
-                  <span class="icon">
-                    <i class="fas fa-sign-out-alt"></i>
-                  </span>
+                  <b-icon icon="logout"></b-icon>
                   <span>Logout, {{ username }}</span>
                 </div>
               </span>
@@ -92,7 +88,7 @@ export default {
         // }
         {
           text: 'Admin',
-          name: 'ListTalksPage',
+          name: 'AdminPage',
           exact: true
         }
       ]

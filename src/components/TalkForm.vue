@@ -23,7 +23,7 @@
       </div>
       <div class="field is-grouped">
         <div class="control">
-          <button class="button is-link" @click="submitTalk">Submit</button>
+          <button class="button is-info" @click="submitTalk">Submit</button>
         </div>
         <div class="control">
           <button class="button is-text" @click="resetInputs">Cancel</button>
