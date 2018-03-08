@@ -9,7 +9,7 @@
               v-for="option in [activeEvent]"
               :value="option['.key']"
               :key="option['.key']">
-              {{ option.start_datetime }}
+              {{ formatDate(option.start_datetime) }}
             </option>
           </b-select>
         </b-field>
@@ -49,6 +49,8 @@
 
 <script>
 import { mapGetters } from 'vuex'
+
+import { format } from '@/utils/dates'
 
 export default {
   data() {
@@ -100,6 +102,9 @@ export default {
       let diff = this.storedSelectedTalkIds.filter(x => unselectedTalkIds.includes(x))
       console.log('Diff: ', diff)
       return diff
+    },
+    formatDate (date) {
+      return format.monthDayYearTime(date)
     }
   },
   created () {
