@@ -54,19 +54,22 @@ const actions = {
         return event
       })
       .then(event => {
-        return FirebaseUtils.getEventTalks(event['.key'])
+        return FirebaseUtils.getEventSubmittedTalks(event['.key'])
       })
       .then(talks => {
         commit(types.SET_EVENT_TALKS, talks)
       })
       .catch(error => console.log(error))
   },
-  fetchEventTalks ({ commit }, eventId) {
+  fetchEventSubmittedTalks ({ commit }, eventId) {
     FirebaseUtils.getEventTalks(eventId)
       .then(talks => {
         commit(types.SET_EVENT_TALKS, talks)
       })
       .catch(error => console.log(error))
+  },
+  setEventSelectedTalkIds ({ commit }, talkIds) {
+    
   },
   setActiveEvent ({ commit }, event) {
     commit(types.SET_ACTIVE_EVENT, event)

@@ -21,7 +21,22 @@ function getActiveEvent () {
     .catch(error => console.log(error))
 }
 
-function getEventTalks (eventId) {
+function getEventSelectedTalks (event) {
+  let talksRef = db.collection('talks')
+  let eventTalks = talksRef.where('eventId', '==', event['.key'])
+
+  return eventTalks
+    .get()
+    .then(snapshotHandler)
+    .then(docs => {
+      return docs.filter(doc => {
+        return event.submitted_talk_ids.includes(doc['.key'])
+      })
+    })
+    .catch(errorHandler)
+}
+
+function getEventSubmittedTalks (eventId) {
   let talksRef = db.collection('talks')
   // let eventTalks = talksRef.where('eventId', '==', eventId).where('selected', '==', true)
   let eventTalks = talksRef.where('eventId', '==', eventId)
@@ -70,7 +85,8 @@ function submitTalkForEvent (talk) {
 
 export default {
   getActiveEvent,
-  getEventTalks,
+  getEventSelectedTalks,
+  getEventSubmittedTalks,
   getUserTalks,
 
   submitTalkForEvent

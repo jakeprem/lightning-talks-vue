@@ -7,7 +7,8 @@ export default new BaseModel([
   'submission_deadline',
   'number_of_talks',
   'talk_length',
-  'voting_enabled'
+  'voting_enabled',
+  'selected_talk_ids'
 ])
 
 // __contract__ = {
