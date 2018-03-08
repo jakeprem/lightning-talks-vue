@@ -23,7 +23,8 @@ function getActiveEvent () {
 
 function getEventTalks (eventId) {
   let talksRef = db.collection('talks')
-  let eventTalks = talksRef.where('eventId', '==', eventId).where('selected', '==', true)
+  // let eventTalks = talksRef.where('eventId', '==', eventId).where('selected', '==', true)
+  let eventTalks = talksRef.where('eventId', '==', eventId)
 
   return eventTalks
     .get()

@@ -6,24 +6,29 @@
         <b-field label="Event" class="is-one-fifth is-offset-two-fifths">
           <b-select placeholder="Select an event" size="is-large">
             <option
-              v-for="option in data"
-              :value="option.id"
-              :key="option.id">
-              {{ option.first_name }}
+              v-for="option in [activeEvent]"
+              :value="option['.key']"
+              :key="option['.key']">
+              {{ option.start_datetime }}
             </option>
           </b-select>
         </b-field>
       </div>
     </div>
-    <button class="button field is-danger" @click="checkedRows = []"
+    <button class="button field is-success" @click="checkedRows = []"
+      :disabled="!checkedRows.length">
+      <b-icon icon="content-save"></b-icon>
+      <span>Save</span>
+    </button>
+    <button class="button field is-danger" @click="checkedRows = eventTalks"
       :disabled="!checkedRows.length">
       <b-icon icon="close"></b-icon>
-      <span>Clear Checked</span>
+      <span>Clear</span>
     </button>
     <b-tabs>
       <b-tab-item label="Table">
         <b-table
-          :data="data"
+          :data="eventTalks"
           :columns="columns"
           :checked-rows.sync="checkedRows"
           checkable>
@@ -43,45 +48,62 @@
 </template>
 
 <script>
-  export default {
-    data() {
-      const data = [
-        { 'id': 1, 'first_name': 'Jesse', 'last_name': 'Simmons', 'date': '2016-10-15 13:43:27', 'gender': 'Male' },
-        { 'id': 2, 'first_name': 'John', 'last_name': 'Jacobs', 'date': '2016-12-15 06:00:53', 'gender': 'Male' },
-        { 'id': 3, 'first_name': 'Tina', 'last_name': 'Gilbert', 'date': '2016-04-26 06:26:28', 'gender': 'Female' },
-        { 'id': 4, 'first_name': 'Clarence', 'last_name': 'Flores', 'date': '2016-04-10 10:28:46', 'gender': 'Male' },
-        { 'id': 5, 'first_name': 'Anne', 'last_name': 'Lee', 'date': '2016-12-06 14:38:38', 'gender': 'Female' }
-      ]
+import { mapGetters } from 'vuex'
 
-      return {
-        data,
-        checkedRows: [data[1], data[3]],
-        columns: [
-          {
-            field: 'id',
-            label: 'ID',
-            width: '40',
-            numeric: true
-          },
-          {
-            field: 'first_name',
-            label: 'First Name',
-          },
-          {
-            field: 'last_name',
-            label: 'Last Name',
-          },
-          {
-            field: 'date',
-            label: 'Date',
-            centered: true
-          },
-          {
-            field: 'gender',
-            label: 'Gender',
-          }
-        ]
-      }
+export default {
+  data() {
+    return {
+      checkedRows: [],
+      columns: [
+        {
+          field: 'title',
+          label: 'Title'
+        },
+        {
+          field: 'abstract',
+          label: 'Abstract'
+        },
+        {
+          field: 'submitterName',
+          label: 'Submitter'
+        },
+        {
+          field: 'outline_link',
+          label: 'Outline'
+        }
+      ]
+    }
+  },
+  computed: {
+    ...mapGetters([
+      'activeEvent',
+      'eventTalks'
+    ]),
+    storedSelectedTalkIds () {
+      return this.eventTalks.filter(x => x.selected == true).map(x => x['.key'])
+    },
+    localSelectedTalkIds () {
+      return this.checkedRows.map(x => x['.key'])
+    },
+    diffIds () {
+      return this.stuff()
+    }
+  },
+  methods: {
+    stuff () {
+      let selectedTalkIds = this.localSelectedTalkIds
+      let unselectedTalkIds = this.eventTalks.map(x => x['.key']).filter(x => !selectedTalkIds.includes(x))
+
+      console.log('Selected: ', selectedTalkIds)
+      console.log('Unselected: ', unselectedTalkIds)
+
+      let diff = this.storedSelectedTalkIds.filter(x => unselectedTalkIds.includes(x))
+      console.log('Diff: ', diff)
+      return diff
+    }
+  },
+  created () {
+    this.checkedRows = this.eventTalks.filter(x => x.selected === true)
   }
 }
 </script>

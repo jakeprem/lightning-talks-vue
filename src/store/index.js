@@ -51,6 +51,13 @@ const actions = {
     FirebaseUtils.getActiveEvent()
       .then(event => {
         commit(types.SET_ACTIVE_EVENT, event)
+        return event
+      })
+      .then(event => {
+        return FirebaseUtils.getEventTalks(event['.key'])
+      })
+      .then(talks => {
+        commit(types.SET_EVENT_TALKS, talks)
       })
       .catch(error => console.log(error))
   },
