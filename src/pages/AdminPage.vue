@@ -1,24 +1,25 @@
 <template>
 <div>
-  <div class="container">
-    <b-field label="Event">
-      <b-select placeholder="Select an event" size="is-large">
-        <option
-          v-for="option in data"
-          :value="option.id"
-          :key="option.id">
-          {{ option.first_name }}
-        </option>
-      </b-select>
-    </b-field>
-  </div>
   <section class="section">
+    <div class="level">
+      <div class="level-item has-text-centered">
+        <b-field label="Event" class="is-one-fifth is-offset-two-fifths">
+          <b-select placeholder="Select an event" size="is-large">
+            <option
+              v-for="option in data"
+              :value="option.id"
+              :key="option.id">
+              {{ option.first_name }}
+            </option>
+          </b-select>
+        </b-field>
+      </div>
+    </div>
     <button class="button field is-danger" @click="checkedRows = []"
       :disabled="!checkedRows.length">
       <b-icon icon="close"></b-icon>
       <span>Clear Checked</span>
     </button>
-
     <b-tabs>
       <b-tab-item label="Table">
         <b-table
