@@ -1,7 +1,6 @@
 import BaseModel from '@/models/BaseModel'
 
 export default new BaseModel([
-  'active',
   'start_datetime',
   'end_datetime',
   'submission_deadline',

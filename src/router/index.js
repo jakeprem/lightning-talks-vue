@@ -1,10 +1,9 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import IndexPage from '@/pages/IndexPage'
+import Home from '@/views/Home'
+import Admin from '@/views/Admin'
+
 import LoginPage from '@/pages/LoginPage'
-import SubmitPage from '@/pages/SubmitPage'
-import ListTalksPage from '@/pages/ListTalksPage'
-import AdminPage from '@/pages/AdminPage'
 
 Vue.use(Router)
 
@@ -13,8 +12,8 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'IndexPage',
-      component: IndexPage
+      name: 'Home',
+      component: Home
     },
     {
       path: '/login',
@@ -22,19 +21,9 @@ export default new Router({
       component: LoginPage
     },
     {
-      path: '/talks/new',
-      name: 'SubmitPage',
-      component: SubmitPage
-    },
-    {
-      path: '/talks',
-      name: 'ListTalksPage',
-      component: ListTalksPage
-    },
-    {
       path: '/admin',
-      name: 'AdminPage',
-      component: AdminPage
+      name: 'Admin',
+      component: Admin
     }
   ]
 })

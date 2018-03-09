@@ -47,7 +47,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions([
+    ...mapActions('userStore', [
       'submitTalkForEvent'
     ]),
     resetInputs () {
@@ -61,17 +61,21 @@ export default {
         abstract: this.inputAbstract,
         outline_link: this.inputOutline
       }).then(x => {
-        console.log(x)
         this.resetInputs()
+        this.$snackbar.open({
+          message: 'Talk successfully submitted',
+          type: 'is-success',
+          position: 'is-top'
+        })
       })
     }
   },
   computed: {
-    ...mapGetters([
-      'activeEvent'
+    ...mapGetters('userStore', [
+      'event'
     ]),
     submissionDeadline () {
-      return format.monthDayYear(this.activeEvent.submissionDeadline)
+      return format.monthDayYear(this.event.submissionDeadline)
     }
   }
 }

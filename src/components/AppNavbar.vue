@@ -49,21 +49,24 @@
     <!-- Hero content: will be in the middle -->
     <div class="hero-body">
       <div class="container has-text-centered">
-        <h1 class="title">
-          Lightning Talks
-        </h1>
-        <h2 class="subtitle">
-          {{ eventDate }}
-        </h2>
+        <slot>
+          <h1 class="title">
+            Lightning Talks
+          </h1>
+        </slot>
       </div>
+    </div>
+
+    <div class="hero-foot">
+      <slot name="footer">
+      </slot>
     </div>
   </section>
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
+import { mapGetters } from 'vuex'
 
-import { format } from '@/utils/dates'
 // import {ClickOutside} from '@/directives/ClickOutside'
 
 export default {
@@ -73,31 +76,18 @@ export default {
       links: [
         {
           text: 'Home',
-          name: 'IndexPage',
+          name: 'Home',
           exact: true
         },
-        // {
-        //   text: 'Submit a Talk',
-        //   name: 'SubmitPage',
-        //   exact: true
-        // },
-        // {
-        //   text: 'View Talks',
-        //   name: 'ListTalksPage',
-        //   exact: true
-        // }
         {
           text: 'Admin',
-          name: 'AdminPage',
+          name: 'Admin',
           exact: true
         }
       ]
     }
   },
   methods: {
-    ...mapActions([
-      'setActiveEvent'
-    ]),
     toggle (event) {
       if (this.isMenuOpen) {
         return this.hide(event)
@@ -117,19 +107,15 @@ export default {
     logout () {
       // This maybe should be abstracted to Vuex
       this.$firebase.app.auth().signOut().then(() => {
-        this.$router.push({name: 'IndexPage'})
+        this.$router.push({name: 'Home'})
       })
     }
   },
   computed: {
     ...mapGetters([
-      'activeEvent',
       'username',
       'isValidUser'
-    ]),
-    eventDate () {
-      return format.monthDayYearTime(this.activeEvent.start_datetime)
-    }
+    ])
   }
   // directives: {
   // To enable, add this tag to the html element:

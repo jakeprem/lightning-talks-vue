@@ -2,26 +2,28 @@ import { firebaseDb } from '@/firebaseInit'
 
 var db = firebaseDb
 
-function getActiveEvent () {
+function getNextEvent () {
   let eventsRef = db.collection('events')
-  let activeEvents = eventsRef.where('active', '==', true)
+  let activeEvents = eventsRef.orderBy('start_datetime').limit(1)
 
   return activeEvents
     .get()
-    .then(querySnapshot => {
-      let docs = []
-      querySnapshot.forEach(doc => {
-        docs.push({
-          '.key': doc.id,
-          ...doc.data()
-        })
-      })
-      return docs[0]
-    })
-    .catch(error => console.log(error))
+    .then(snapshotHandler)
+    .then(docs => docs[0])
+    .catch(errorHandler)
 }
 
-function getEventSelectedTalks (event) {
+function getEvents () {
+  let eventsRef = db.collection('events')
+  let events = eventsRef.orderBy('start_datetime')
+
+  return events
+    .get()
+    .then(snapshotHandler)
+    .catch(errorHandler)
+}
+
+function getEventTalks (event) {
   let talksRef = db.collection('talks')
   let eventTalks = talksRef.where('eventId', '==', event['.key'])
 
@@ -36,10 +38,10 @@ function getEventSelectedTalks (event) {
     .catch(errorHandler)
 }
 
-function getEventSubmittedTalks (eventId) {
+function getEventSubmittedTalks (event) {
   let talksRef = db.collection('talks')
   // let eventTalks = talksRef.where('eventId', '==', eventId).where('selected', '==', true)
-  let eventTalks = talksRef.where('eventId', '==', eventId)
+  let eventTalks = talksRef.where('eventId', '==', event['.key'])
 
   return eventTalks
     .get()
@@ -78,14 +80,15 @@ function submitTalkForEvent (talk) {
   return talksRef
     .add(talk)
     .then(x => {
-      console.log('submit', x)
       return talk
     })
 }
 
 export default {
-  getActiveEvent,
-  getEventSelectedTalks,
+  getNextEvent,
+  getEvents,
+  getEventTalks,
+
   getEventSubmittedTalks,
   getUserTalks,
 

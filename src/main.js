@@ -27,9 +27,6 @@ Window.VueApp = new Vue({
   router,
   store,
   render: h => h(App),
-  beforeMount () {
-    store.dispatch('fetchActiveEvent')
-  },
   created () {
     firebaseApp.auth().onAuthStateChanged(user => {
       if (user) {
@@ -37,7 +34,7 @@ Window.VueApp = new Vue({
         this.$store.dispatch('setUser', {
           displayName, uid
         })
-        this.$router.push({name: 'IndexPage'})
+        this.$router.push({name: 'Home'})
       } else {
         this.$store.dispatch('setUser', '')
       }
