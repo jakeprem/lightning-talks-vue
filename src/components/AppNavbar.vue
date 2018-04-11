@@ -5,7 +5,7 @@
         <div class="container">
           <div class="navbar-brand">
             <a class="navbar-item">
-              <img src="/static/icon-128.png" alt="Logo">
+              <!-- <img src="/static/icon-128.png" alt="Logo"> -->
             </a>
             <span class="navbar-burger burger" :class="{'is-active': isMenuOpen}" @click="toggle">
               <span></span>
@@ -74,21 +74,6 @@ export default {
         {
           text: 'Home',
           name: 'IndexPage',
-          exact: true
-        },
-        // {
-        //   text: 'Submit a Talk',
-        //   name: 'SubmitPage',
-        //   exact: true
-        // },
-        // {
-        //   text: 'View Talks',
-        //   name: 'ListTalksPage',
-        //   exact: true
-        // }
-        {
-          text: 'Admin',
-          name: 'AdminPage',
           exact: true
         }
       ]
