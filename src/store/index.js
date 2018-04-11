@@ -1,9 +1,10 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
+import EventService from '@/lib/EventService.js'
+
 import EventModel from '@/models/EventModel'
 import UserModel from '@/models/UserModel'
-import FirebaseUtils from '@/utils/firebase'
 import TalkModel from '../models/TalkModel'
 
 Vue.use(Vuex)
@@ -48,13 +49,17 @@ const getters = {
 
 const actions = {
   fetchActiveEvent ({ commit }) {
-    FirebaseUtils.getActiveEvent()
+    EventService.getActiveEvent()
       .then(event => {
+        event.start_datetime = new Date(event.start_datetime)
+        event.end_datetime = new Date(event.end_datetime)
+        event.submission_deadline = new Date(event.submission_deadline)
+
         commit(types.SET_ACTIVE_EVENT, event)
         return event
       })
       .then(event => {
-        return FirebaseUtils.getEventTalks(event['.key'])
+        return EventService.getEventTalks(event['id'])
       })
       .then(talks => {
         commit(types.SET_EVENT_TALKS, talks)
@@ -62,7 +67,7 @@ const actions = {
       .catch(error => console.log(error))
   },
   fetchEventTalks ({ commit }, eventId) {
-    FirebaseUtils.getEventTalks(eventId)
+    EventService.getEventTalks(eventId)
       .then(talks => {
         commit(types.SET_EVENT_TALKS, talks)
       })
@@ -75,14 +80,14 @@ const actions = {
     commit(types.SET_USER, user)
   },
   submitTalkForEvent ({ commit, state }, talk) {
-    talk.eventId = state.activeEvent['.key']
+    talk.eventId = state.activeEvent['id']
     talk.submitterId = state.user.uid
     talk.submitterName = state.user.displayName
     talk.selected = false
 
     return TalkModel
       .validate(talk)
-      .then(FirebaseUtils.submitTalkForEvent)
+      .then(EventService.submitTalkForEvent)
       .catch(error => console.log(error))
   }
 }

@@ -4,7 +4,6 @@ import IndexPage from '@/pages/IndexPage'
 import LoginPage from '@/pages/LoginPage'
 import SubmitPage from '@/pages/SubmitPage'
 import ListTalksPage from '@/pages/ListTalksPage'
-import AdminPage from '@/pages/AdminPage'
 
 Vue.use(Router)
 
@@ -30,11 +29,6 @@ export default new Router({
       path: '/talks',
       name: 'ListTalksPage',
       component: ListTalksPage
-    },
-    {
-      path: '/admin',
-      name: 'AdminPage',
-      component: AdminPage
     }
   ]
 })
