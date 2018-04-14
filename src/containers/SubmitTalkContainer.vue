@@ -20,7 +20,7 @@
               <div class="field-body">
                 <div class="field">
                   <div class="control">
-                    <input class="input" type="email" placeholder="Your email address" autofocus>
+                    <input class="input" v-model="email" type="email" placeholder="Your email address" autofocus>
                   </div>
                 </div>
               </div>
@@ -29,7 +29,7 @@
 
           <div class="steps-actions">
             <div class="steps-action">
-              <button class="button is-info">Login</button>
+              <button class="button is-info" @click="login">Login</button>
             </div>
           </div>
         </StepContent>
@@ -42,7 +42,7 @@
               <div class="field-body">
                 <div class="field">
                   <div class="control">
-                    <input class="input" type="text" placeholder="Token" autofocus>
+                    <input class="input" type="text" v-model="token" placeholder="Token" autofocus>
                   </div>
                 </div>
               </div>
@@ -50,7 +50,7 @@
           </div>
           <div class="steps-actions">
             <div class="steps-action">
-              <button class="button is-info">Verify</button>
+              <button class="button is-info" @click="verify">Verify</button>
             </div>
           </div>
         </StepContent>
@@ -80,6 +80,8 @@ import Stepper from '@/components/Stepper'
 
 import TalkForm from '@/components/TalkForm'
 
+import AuthService from '@/lib/AuthService.js'
+
 export default {
   name: 'SubmitTalkContainer',
   components: {
@@ -91,7 +93,9 @@ export default {
   data() {
     return {
       currentStep: 1,
-      steps: ['Login', 'Verify', 'Submit']
+      steps: ['Login', 'Verify', 'Submit'],
+      email: '',
+      token: ''
     }
   },
   methods: {
@@ -104,6 +108,21 @@ export default {
       if (this.currentStep > 1) {
         this.currentStep--
       }
+    },
+    login() {
+      AuthService.login(this.email)
+        .then(data => {
+          this.$toast.open({ message: data.detail, type: 'is-success' })
+          this.currentStep++
+        })
+    },
+    verify() {
+      AuthService.verify(this.token)
+        .then(data => {
+          console.log(data)
+          this.currentStep++
+        })
+
     }
   }
 }
