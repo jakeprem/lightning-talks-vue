@@ -1,11 +1,19 @@
 <template>
-  <div :is="activeComponent"></div>
+  <div>
+    <AppNavbar />
+    <div :is="activeComponent"></div>
+    <AppFooter />
+  </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapState } from 'vuex'
 import SubmitPage from '@/pages/SubmitPage'
 import ListTalksPage from '@/pages/ListTalksPage'
+import LoginPage from '@/pages/LoginPage'
+
+import AppNavbar from '@/components/AppNavbar'
+import AppFooter from '@/components/AppFooter'
 
 export default {
   data () {
@@ -28,6 +36,8 @@ export default {
     ]),
     activeComponent () {
       switch (this.activeEventState) {
+        case 'NoUser':
+          return LoginPage
         case 'BeforeSubmissionDeadline':
           return SubmitPage
         case 'BeforeEventStart':
@@ -41,7 +51,8 @@ export default {
     }
   },
   components: {
-    ListTalksPage
+    AppNavbar,
+    AppFooter
   }
 }
 </script>

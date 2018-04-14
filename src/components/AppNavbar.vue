@@ -71,11 +71,11 @@ export default {
     return {
       isMenuOpen: false,
       links: [
-        {
-          text: 'Home',
-          name: 'IndexPage',
-          exact: true
-        }
+        // {
+        //   text: 'Home',
+        //   name: 'IndexPage',
+        //   exact: true
+        // }
       ]
     }
   },
