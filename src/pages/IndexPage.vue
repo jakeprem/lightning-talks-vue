@@ -1,7 +1,9 @@
 <template>
   <div>
     <AppNavbar />
-    <div :is="activeComponent"></div>
+    <section class="section">
+      <div :is="activeComponent"></div>
+    </section>
     <AppFooter />
   </div>
 </template>
@@ -10,7 +12,8 @@
 import { mapGetters, mapState } from 'vuex'
 import SubmitPage from '@/pages/SubmitPage'
 import ListTalksPage from '@/pages/ListTalksPage'
-import LoginPage from '@/pages/LoginPage'
+
+import SubmitTalkContainer from '@/containers/SubmitTalkContainer'
 
 import AppNavbar from '@/components/AppNavbar'
 import AppFooter from '@/components/AppFooter'
@@ -36,10 +39,8 @@ export default {
     ]),
     activeComponent () {
       switch (this.activeEventState) {
-        case 'NoUser':
-          return LoginPage
         case 'BeforeSubmissionDeadline':
-          return SubmitPage
+          return SubmitTalkContainer
         case 'BeforeEventStart':
           return ListTalksPage
         case 'AfterEventStart':
