@@ -5,7 +5,6 @@
         <div class="container">
           <div class="navbar-brand">
             <a class="navbar-item">
-              <!-- <img src="/static/icon-128.png" alt="Logo"> -->
             </a>
             <span class="navbar-burger burger" :class="{'is-active': isMenuOpen}" @click="toggle">
               <span></span>
@@ -25,21 +24,6 @@
               >
                 &nbsp; {{ link.text || link.name }}
               </router-link>
-              <span class="navbar-item" v-if="!isValidUser">
-                <router-link
-                  class="button is-info is-inverted"
-                  :to="{name: 'LoginPage'}"
-                >
-                  <b-icon icon="login"></b-icon>
-                  <span>Login</span>
-                </router-link>
-              </span>
-              <span class="navbar-item" @click="logout" v-else>
-                <div class="button is-info is-inverted">
-                  <b-icon icon="logout"></b-icon>
-                  <span>Logout, {{ username }}</span>
-                </div>
-              </span>
             </div>
           </div>
         </div>

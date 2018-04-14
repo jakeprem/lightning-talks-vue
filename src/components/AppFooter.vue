@@ -8,7 +8,7 @@
         </p>
         <p>
           <a class="icon" href="https://github.com/jakeprem/lightning-talks-vue">
-            <i class="fab fa-github"></i>
+            <i class="fa fa-github"></i>
           </a>
         </p>
         <br>
