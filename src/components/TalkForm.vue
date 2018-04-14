@@ -61,8 +61,11 @@ export default {
         abstract: this.inputAbstract,
         outline_link: this.inputOutline
       }).then(x => {
-        console.log(x)
+        this.$toast.open({ message: 'Successfully submitted talk', type: 'is-success' })
         this.resetInputs()
+      })
+      .catch(err => {
+        this.$toast.open({ message: 'Failed to submit talk', type: 'is-danger' })
       })
     }
   },
