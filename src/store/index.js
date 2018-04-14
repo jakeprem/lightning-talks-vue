@@ -31,7 +31,7 @@ const getters = {
 
     switch (true) {
       case currentDate < activeEvent.submission_deadline:
-        return 'BeforeSubmissionDeadline'
+        return state.user !== '' ? 'BeforeSubmissionDeadline' : 'NoUser'
       case currentDate < activeEvent.start_datetime:
         return 'BeforeEventStart'
       case currentDate < activeEvent.end_datetime:
@@ -79,16 +79,8 @@ const actions = {
   setUser ({ commit }, user) {
     commit(types.SET_USER, user)
   },
-  submitTalkForEvent ({ commit, state }, talk) {
-    talk.eventId = state.activeEvent['id']
-    talk.submitterId = state.user.uid
-    talk.submitterName = state.user.displayName
-    talk.selected = false
-
-    return TalkModel
-      .validate(talk)
-      .then(EventService.submitTalkForEvent)
-      .catch(error => console.log(error))
+  submitTalkForEvent ({ commit, state }, talk, email) {
+    return EventService.submitTalkForEvent(talk, email)
   }
 }
 

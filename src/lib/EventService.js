@@ -13,5 +13,8 @@ export default {
     return HTTP.get(`events/${eventId}/talks/`)
       .then(returnData)
       .catch(logError)
+  },
+  submitTalkForEvent(talk, email) {
+    return HTTP.post(`talks/`, {...talk, email})
   }
 }
