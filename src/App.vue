@@ -13,5 +13,8 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
+@import 'bulma/bulma.sass';
+@import 'bulma-steps/dist/bulma-steps.sass';
+
 </style>
