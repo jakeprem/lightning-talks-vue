@@ -31,7 +31,7 @@ const getters = {
 
     switch (true) {
       case currentDate < activeEvent.submission_deadline:
-        return state.user !== '' ? 'BeforeSubmissionDeadline' : 'NoUser'
+        return 'BeforeSubmissionDeadline'
       case currentDate < activeEvent.start_datetime:
         return 'BeforeEventStart'
       case currentDate < activeEvent.end_datetime:

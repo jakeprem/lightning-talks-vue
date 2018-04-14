@@ -15,6 +15,6 @@ export default {
       .catch(logError)
   },
   submitTalkForEvent(talk, email) {
-    return HTTP.post(`talks/`, {...talk, email})
+    return HTTP.post(`talks/`, talk)
   }
 }

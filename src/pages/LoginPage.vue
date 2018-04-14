@@ -1,9 +1,22 @@
 <template>
-  <section class="section">
-    <div class="container has-text-centered">
-      <h1 class="title">Login</h1>
-      <h2 class="subtitle">Please login to continue</h2>
-      <div id="firebase-auth-container"></div>
+<section class="section">
+    <div class="container">
+      <h1 class="title">Please provide an email to continue</h1>
+      <div class="field">
+        <label class="label">Email</label>
+        <div class="control">
+          <input type="email" class="input" v-model="email" placeholder="Enter your email here">
+        </div>
+      </div>
+     
+      <div class="field is-grouped">
+        <div class="control">
+          <button class="button is-info" @click="saveEmail">Continue</button>
+        </div>
+        <div class="control">
+          <button class="button is-text" @click="resetInputs">Cancel</button>
+        </div>
+      </div>
     </div>
   </section>
 </template>
@@ -14,19 +27,20 @@ import { mapActions } from 'vuex'
 export default {
   data () {
     return {
+      email: ''
     }
+  },
+  computed: {
   },
   methods: {
     ...mapActions([
-      'setUser'
+      'setEmail',
     ]),
-    login () {
-      this.setUser(this.username)
-      this.resetInputs()
+    saveEmail () {
+      this.setEmail(this.email)
     },
     resetInputs () {
-      this.username = ''
-      this.password = ''
+      this.email = ''
     }
   }
 }
