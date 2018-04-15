@@ -10,7 +10,6 @@
 
 <script>
 import { mapGetters, mapState } from 'vuex'
-import SubmitPage from '@/pages/SubmitPage'
 import ListTalksPage from '@/pages/ListTalksPage'
 
 import SubmitTalkContainer from '@/containers/SubmitTalkContainer'
