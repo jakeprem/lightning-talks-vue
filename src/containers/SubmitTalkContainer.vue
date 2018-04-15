@@ -1,10 +1,10 @@
 <template>
   <div class="container">
     <Stepper>
-      <StepHeader 
-        v-for="(step, index) in steps" 
-        :key="step" 
-        :isActive="currentStep==index+1" 
+      <StepHeader
+        v-for="(step, index) in steps"
+        :key="step"
+        :isActive="currentStep==index+1"
         :isCompleted="currentStep > index"
       >
         <p class="step-title">{{ step }}</p>
@@ -55,7 +55,12 @@
           </div>
         </StepContent>
         <StepContent :isActive="currentStep==3">
-          <TalkForm />
+          <TalkForm @submitSuccess="incr" />
+        </StepContent>
+        <StepContent :isActive="currentStep==4">
+          <div class="step-content has-text-centered is-active">
+            <h1 class="title">Your talk has been submitted!</h1>
+          </div>
         </StepContent>
       </template>
 
@@ -70,17 +75,17 @@
         </div> -->
       </template>
     </Stepper>
+    <b-loading :is-full-page="true" :active.sync="isLoading"></b-loading>
   </div>
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex'
+
 import StepContent from '@/components/Steps/StepContent'
 import StepHeader from '@/components/Steps/StepHeader'
-import Stepper from '@/components/Stepper'
-
+import Stepper from '@/components/Steps/Stepper'
 import TalkForm from '@/components/TalkForm'
-
-import AuthService from '@/lib/AuthService.js'
 
 export default {
   name: 'SubmitTalkContainer',
@@ -90,39 +95,64 @@ export default {
     StepHeader,
     TalkForm
   },
-  data() {
+  data () {
     return {
       currentStep: 1,
       steps: ['Login', 'Verify', 'Submit'],
       email: '',
-      token: ''
+      token: '',
+      isLoading: false
     }
   },
+  created () {
+    if (this.isAuthenticated) {
+      // TODO: submit an AJAX request to see if this user
+      // has already submitted a talk. If so, navigate to/enter
+      // edit mode
+      this.currentStep = 3
+    }
+  },
+  computed: {
+    ...mapGetters([
+      'isAuthenticated'
+    ])
+  },
   methods: {
-    incrStep() {
+    ...mapActions([
+      'loginAction',
+      'verifyAction'
+    ]),
+    incr () {
       if (this.currentStep < this.steps.length + 1) {
         this.currentStep++
       }
     },
-    decrStep() {
-      if (this.currentStep > 1) {
+    decr () {
+      if (this.currentStep > 0) {
         this.currentStep--
       }
     },
-    login() {
-      AuthService.login(this.email)
+    login () {
+      this.isLoading = true
+      this.loginAction(this.email)
         .then(data => {
+          this.isLoading = false
           this.$toast.open({ message: data.detail, type: 'is-success' })
-          this.currentStep++
+          this.incr()
+        })
+        .catch(err => {
+          this.isLoading = false
+          this.$toast.open({ message: 'Unable to login at this time.', type: 'is-danger' })
+          console.error(err)
         })
     },
-    verify() {
-      AuthService.verify(this.token)
+    verify () {
+      this.isLoading = true
+      this.verifyAction(this.token)
         .then(data => {
-          console.log(data)
-          this.currentStep++
+          this.isLoading = false
+          this.incr()
         })
-
     }
   }
 }

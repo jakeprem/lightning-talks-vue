@@ -1,4 +1,4 @@
-import { HTTP } from '@/lib/http-common.js'
+import { HTTP } from '@/lib/http-common'
 
 let returnData = resp => resp.data
 let logError = err => console.error(err)
@@ -14,7 +14,7 @@ export default {
       .then(returnData)
       .catch(logError)
   },
-  submitTalkForEvent(talk, email) {
+  submitTalkForEvent (talk) {
     return HTTP.post(`talks/`, talk)
   }
 }

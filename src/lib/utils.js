@@ -10,4 +10,4 @@ export function makeLocalStorageHelper (key) {
   }
 }
 
-export const storedJWT = makeLocalStorageHelper('__jwt__')
+export const storedToken = makeLocalStorageHelper('__token__')

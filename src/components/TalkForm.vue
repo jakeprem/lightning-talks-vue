@@ -1,5 +1,5 @@
 <template>
-  <form>
+  <form @submit.prevent="submitTalk">
     <h1 class="title">Submit a Lightning Talk</h1>
     <h2 class="subtitle is-size-6 has-text-grey-light">Deadline: {{ submissionDeadline }}</h2>
     <div class="field">
@@ -15,17 +15,17 @@
       </div>
     </div>
     <div class="field">
-      <label class="label">Outline/Slides</label>
+      <label class="label">Outline/Slides Link</label>
       <div class="control">
         <input type="text" class="input" v-model="inputOutline" placeholder="Enter a link here">
       </div>
     </div>
     <div class="field is-grouped">
       <div class="control">
-        <button class="button is-info" @click="submitTalk">Submit</button>
+        <button type="submit" class="button is-info">Submit</button>
       </div>
       <div class="control">
-        <button class="button is-text" @click="resetInputs">Cancel</button>
+        <button class="button is-text" @click.prevent="resetInputs">Cancel</button>
       </div>
     </div>
   </form>
@@ -58,13 +58,16 @@ export default {
         title: this.inputTitle,
         abstract: this.inputAbstract,
         outline_link: this.inputOutline
-      }).then(x => {
-        this.$toast.open({ message: 'Successfully submitted talk', type: 'is-success' })
-        this.resetInputs()
       })
-      .catch(err => {
-        this.$toast.open({ message: 'Failed to submit talk', type: 'is-danger' })
-      })
+        .then(x => {
+          this.$toast.open({ message: 'Successfully submitted talk', type: 'is-success' })
+          this.$emit('submitSuccess')
+          this.resetInputs()
+        })
+        .catch(err => {
+          console.log(err)
+          this.$toast.open({ message: 'Failed to submit talk', type: 'is-danger' })
+        })
     }
   },
   computed: {

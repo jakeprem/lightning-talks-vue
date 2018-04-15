@@ -5,11 +5,8 @@
 </template>
 
 <script>
-import AppNavbar from '@/components/AppNavbar'
-import AppFooter from '@/components/AppFooter'
-
 export default {
-  name: 'App',
+  name: 'App'
 }
 </script>
 

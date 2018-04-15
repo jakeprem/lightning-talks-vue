@@ -1,11 +1,12 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-import EventService from '@/lib/EventService.js'
+import AuthService from '@/lib/AuthService'
+import EventService from '@/lib/EventService'
 
 import EventModel from '@/models/EventModel'
-import UserModel from '@/models/UserModel'
-import TalkModel from '../models/TalkModel'
+
+import { storedToken } from '@/lib/utils'
 
 Vue.use(Vuex)
 
@@ -14,13 +15,13 @@ const debug = process.env.NODE_ENV !== 'production'
 const types = {
   SET_ACTIVE_EVENT: 'SET_ACTIVE_EVENT',
   SET_EVENT_TALKS: 'SET_EVENT_TALKS',
-  SET_USER: 'SET_USER'
+  SET_TOKEN: 'SET_TOKEN'
 }
 
 const state = {
   activeEvent: EventModel.default(),
   eventTalks: [],
-  user: ''
+  token: storedToken.get() || ''
 }
 
 const getters = {
@@ -39,12 +40,7 @@ const getters = {
     }
   },
   eventTalks: state => state.eventTalks,
-  user: state => state.user,
-  username: state => state.user.displayName,
-  userId: state => state.user.uid,
-  isValidUser: state => {
-    return UserModel._validate(state.user)
-  }
+  isAuthenticated: state => !!state.token
 }
 
 const actions = {
@@ -61,9 +57,9 @@ const actions = {
       .then(event => {
         return EventService.getEventTalks(event['id'])
       })
-      .then(talks => {
-        commit(types.SET_EVENT_TALKS, talks)
-      })
+      // .then(talks => {
+      //   commit(types.SET_EVENT_TALKS, talks)
+      // })
       .catch(error => console.log(error))
   },
   fetchEventTalks ({ commit }, eventId) {
@@ -79,8 +75,18 @@ const actions = {
   setUser ({ commit }, user) {
     commit(types.SET_USER, user)
   },
-  submitTalkForEvent ({ commit, state }, talk, email) {
-    return EventService.submitTalkForEvent(talk, email)
+  submitTalkForEvent ({ commit, state }, talk) {
+    return EventService.submitTalkForEvent(talk)
+  },
+  loginAction ({ commit }, email) {
+    return AuthService.login(email)
+  },
+  verifyAction ({ commit }, token) {
+    return AuthService.verify(token)
+      .then(data => {
+        console.log(data)
+        commit(types.SET_TOKEN, data.token)
+      })
   }
 }
 
@@ -91,8 +97,9 @@ const mutations = {
   [types.SET_EVENT_TALKS] (state, talks) {
     state.eventTalks = talks
   },
-  [types.SET_USER] (state, user) {
-    state.user = user
+  [types.SET_TOKEN] (state, token) {
+    state.token = token
+    storedToken.set(token)
   }
 }
 

@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import { mapGetters, mapState } from 'vuex'
+import { mapGetters } from 'vuex'
 import ListTalksPage from '@/pages/ListTalksPage'
 
 import SubmitTalkContainer from '@/containers/SubmitTalkContainer'
